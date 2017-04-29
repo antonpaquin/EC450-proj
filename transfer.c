@@ -6,6 +6,7 @@
  */
 
 #include <stdlib.h>
+#include "msp.h"
 
 #include "gamecube.h"
 
@@ -16,14 +17,22 @@ void tf_putBuffer(gc_input_t* input) {
 
 void tf_onGpioInterrupt() {
     // clear interrupt
+    P4 -> IFG &= ~BIT5;
+
     // disable interrupts
+    P4 -> IE &= ~BIT5;
+    //__disable_interrupt();
 
     if (!nextOutput)
         return;
 
     // wait 24 (tuned) cycles
+    volatile int timer = 0;
+    for (timer=0; timer<24; timer++) {
+    }
 
     // set pin direction to out
+    P4 -> DIR |= BIT5;
 
     char* writebuf = (char*) nextInput;
     char writePosition = 0;
@@ -39,7 +48,9 @@ void tf_onGpioInterrupt() {
     nextInput = NULL;
 
     // set pin direction to in
+    P4 -> DIR &= ~BIT5;
     // enable interrupts
+    P4 -> IE |= BIT5;
 }
 
 inline void tf_send(char c) {
