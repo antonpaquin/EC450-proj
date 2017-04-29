@@ -55,8 +55,8 @@ void tf_onGpioInterrupt() {
 
 inline void tf_send(char c) {
     if (c) {
-        // write 1
+        P4 -> OUT |= BIT5;
     } else {
-        // write 0
+        P4 -> OUT &= ~BIT5;
     }
 }
