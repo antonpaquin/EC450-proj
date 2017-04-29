@@ -34,5 +34,5 @@ void main(void) {
 
 // Attach gpio interrupt to transfer.c
 void PORT4_IRQHandler(void) {
-    tf_onGpioInterrupt()
+    tf_onGpioInterrupt();
 }

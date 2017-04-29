@@ -11,8 +11,10 @@
 #include "gamecube.h"
 
 gc_input_t* nextInput;
+inline void tf_send(char c);
+
 void tf_putBuffer(gc_input_t* input) {
-    nextOutput = input;
+    nextInput = input;
 }
 
 void tf_onGpioInterrupt() {
@@ -23,7 +25,7 @@ void tf_onGpioInterrupt() {
     P4 -> IE &= ~BIT5;
     //__disable_interrupt();
 
-    if (!nextOutput)
+    if (!nextInput)
         return;
 
     // wait 24 (tuned) cycles
