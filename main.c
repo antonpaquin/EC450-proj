@@ -19,6 +19,11 @@ void main(void) {
 
 
     // Set up a gpio interrupt
+    P4 -> DIR &= ~BIT5; // Set p4, 5 as an input
+    P4 -> IES &= ~BIT5; // Interrupt on posedge
+    P4 -> IE |= BIT5; // Set p4 5 interrupt on
+    NVIC -> ISER[0] = 1 << ((PORT4_IRQn) & 31); // P4 interrupt in NVIC
+
 
     // Build a gc input
 
@@ -26,3 +31,6 @@ void main(void) {
 }
 
 // Attach gpio interrupt to transfer.c
+void PORT4_IRQHandler(void) {
+    tf_onGpioInterrupt()
+}
