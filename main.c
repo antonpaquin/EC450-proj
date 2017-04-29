@@ -13,9 +13,10 @@ void main(void) {
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
 
     // Set clockspeed to something fast enough
-    CS -> KEY |=  0x695A; // Clock key enables clock modification
-    CS -> CTL0 |= BIT(18); CS -> CTL0 &= ~(BIT(17)); CS -> CTL0 |= BIT(16); // DCO to max speed
-    CS -> CTL1 &= ~BIT2; CS -> CTL1 |= BIT1; CS -> CTL1 |= BIT0; // Set mclk to DCO
+    CS->KEY = 0x695A; // Clock key enables clock modification
+    uint32_t DCOMAX = 327680;
+    CS->CTL0 |= DCOMAX; // DCO to max speed
+    CS->CTL1 &= ~BIT2; CS -> CTL1 |= BIT1; CS -> CTL1 |= BIT0; // Set mclk to DCO
 
 
     // Set up a gpio interrupt
@@ -30,6 +31,10 @@ void main(void) {
 
     // Put the gc input in the buffer
     tf_putBuffer(simpleInput);
+
+    while(1) {
+        tf_onGpioInterrupt();
+    }
 }
 
 // Attach gpio interrupt to transfer.c
