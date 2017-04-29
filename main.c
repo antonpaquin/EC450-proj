@@ -26,8 +26,10 @@ void main(void) {
 
 
     // Build a gc input
+    struct gc_input_t* simpleInput = gc_init();
 
     // Put the gc input in the buffer
+    tf_putBuffer(simpleInput);
 }
 
 // Attach gpio interrupt to transfer.c
