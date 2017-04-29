@@ -7,11 +7,16 @@
 #include "msp.h"
 #include "gamecube.h"
 #include "transfer.h"
+
 void main(void) {
 	
     WDTCTL = WDTPW | WDTHOLD;           // Stop watchdog timer
 
     // Set clockspeed to something fast enough
+    CS -> KEY |=  0x695A; // Clock key enables clock modification
+    CS -> CTL0 |= BIT(18); CS -> CTL0 &= ~(BIT(17)); CS -> CTL0 |= BIT(16); // DCO to max speed
+    CS -> CTL1 &= ~BIT2; CS -> CTL1 |= BIT1; CS -> CTL1 |= BIT0; // Set mclk to DCO
+
 
     // Set up a gpio interrupt
 
