@@ -7,6 +7,9 @@
 #include "msp.h"
 #include "driverlib.h"
 #include "servo.h"
+#include "comm.h"
+
+
 
 void main(void) {
 
@@ -17,6 +20,16 @@ void main(void) {
     MAP_Interrupt_enableMaster();
 
     servo_setup();
+
+    comm_setup();
+
+    //test
+    static uint8_t TXData = 0;
+    TXData = 0x69;
+    while (!(SPI_getInterruptStatus(EUSCI_B0_BASE,EUSCI_B_SPI_TRANSMIT_INTERRUPT)));
+    SPI_transmitData(EUSCI_B0_BASE, TXData);
+
+
 
     volatile uint32_t busyLoop;
     uint8_t servoPos = 0;
