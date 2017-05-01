@@ -18,7 +18,7 @@
         240000, \
         TIMER_A_CAPTURECOMPARE_REGISTER_ ## ccr, \
         TIMER_A_OUTPUTMODE_RESET_SET, \
-        (servo_max + servo_min) / 2 \
+        0 \
     }
 
 Timer_A_PWMConfig servo_confs[]  = {

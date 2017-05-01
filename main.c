@@ -9,6 +9,10 @@
 #include "servo.h"
 #include "comm.h"
 
+static unsigned char data_start = 127;
+#define data_end 136
+volatile uint32_t busyLoop;
+uint8_t servoPos = 0;
 
 
 void main(void) {
@@ -25,17 +29,12 @@ void main(void) {
 
 
 
-    volatile uint32_t busyLoop;
-    uint8_t servoPos = 0;
+
 
 
     while (1) {
+        __sleep();
 
-        for (busyLoop = 0; busyLoop < 960000; busyLoop++) {}
-        for (busyLoop = 0; busyLoop < 5; busyLoop++) {
-            servo_set(busyLoop, servoPos);
-        }
-        servoPos = (servoPos + 30) % 180;
     }
 
 }
