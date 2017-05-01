@@ -6,7 +6,7 @@ data = [90, 90, 90, 90]
 def moveTo(i, a):
   data[i] = a
   for ii in range(4):
-    write_2bytes(data[ii])
+    write_byte(data[ii])
 
 def shoulder(a):
   moveTo(0, a)
