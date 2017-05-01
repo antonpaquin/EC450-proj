@@ -12,7 +12,7 @@ uint32_t status = 0 ;
 static volatile unsigned int ii = 0;
 static volatile unsigned char RXData[4];
 const eUSCI_SPI_SlaveConfig spiSlaveConfig = {
-   EUSCI_B_SPI_MSB_FIRST,
+   EUSCI_B_SPI_LSB_FIRST,
    //EUSCI_SPI_PHASE_DATA_CAPTURED_ONFIRST_CHANGED_ON_NEXT,
    EUSCI_B_SPI_PHASE_DATA_CHANGED_ONFIRST_CAPTURED_ON_NEXT,
    EUSCI_B_SPI_CLOCKPOLARITY_INACTIVITY_LOW,
@@ -26,7 +26,8 @@ void EUSCIB0_IRQHandler(void)
 
     if(status & EUSCI_B_SPI_RECEIVE_INTERRUPT)
     {
-        if (ii == 3) {
+        RXData[ii++] = SPI_receiveData(EUSCI_B0_BASE);
+        if (ii == 4) {
 
                         printf("Setting servos\n");
 
@@ -45,7 +46,7 @@ void EUSCIB0_IRQHandler(void)
                 for(jj=0;jj<4;jj++){RXData[jj]=0;};
                 ii = 0;
         }
-        RXData[ii++] = SPI_receiveData(EUSCI_B0_BASE);
+
 
 
     }
