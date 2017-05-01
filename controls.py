@@ -1,5 +1,5 @@
 import code
-from spi import write_2bytes
+from spi import write_byte
 
 data = [90, 90, 90, 90]
 
