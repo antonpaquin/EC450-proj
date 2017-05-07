@@ -1,0 +1,70 @@
+\documentclass[10pt]{article}
+\usepackage{listings}
+\usepackage[margin=1in]{geometry}
+%Gummi|065|=)
+\title{\textbf{EC450 Final Project | Team 8}}
+\author{William Chen,
+		Anton Paquin\\ \{chenwill, paquin\}@bu.edu}
+\date{}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\begin{document}
+
+\maketitle
+
+\section{Goal and Design}
+
+Our original project for this course involved emulating a GameCube controller for the purpose of performing tool-assisted superplay (TAS) routines on a GameCube or Wii game (for example, Super Smash Brothers Melee or Super Mario Sunshine). Unfortunately, we suffered a softbrick in one of the two MSP432 microprocessor boards at our disposal when attempting to set the main clock to its maximum speed (48MHz). Out of concern for breaking both boards and having no project as a result, we decided to abandon the aforementioned project and decided to venture into building a user-controllable miniature robot arm. \newline
+
+This robot arm was designed using five servo motors and had four joints; two drove a "shoulder" at the base, while three individual motors drove an elbow, wrist, and hand/claw. The MSP432 controlled actuation of these parts, and received commands from an internet-connected Raspberry Pi.
+
+\section{Implementation}
+
+
+
+
+\begin{lstlisting}
+
+
+
+\end{lstlisting}
+
+
+\section{Schematics}
+
+\section{Outcome}
+
+The robot arm responded to inputs with a sufficient degree of accuracy. It was somewhat  
+
+
+\section{Improvements}
+While the servos were fairly accurate when calibrated, they were quite cheap and susceptible to heat problems and audible noise, potentially making them unsafe for long-term use.
+From the communications perspective, some control bytes and/or parity bits could be added to the protocol ensuring that the commands are always correct.
+\section{Code}
+
+
+All the code can be found on GitHub at 
+\begin{lstlisting}
+https://github.com/antonpaquin/EC450-proj
+\end{lstlisting}
+For the sake of convenience, the library routines and main.c are provided in the archive containing this report
+
+\section{Human Resources}
+Anton was responsible for writing code involved with driving the individual servo motors as a library routine and debugged the finished product (calibration values).
+Will was responsible for the communications interface between the MSP432 and the Raspberry Pi (SPI)
+
+
+
+%\begin{figure}[htp]
+%\includegraphics[scale=0.25]{"/home/anton/Documents/School/BU 2017 Spring/EC506/Proj/kibana-shot".png}
+%\caption{Kibana is cool}
+%\end{figure}
+
+%\begin{figure}[htp]
+%\centering
+%\includegraphics[scale=0.25]{"/home/anton/Documents/School/BU 2017 Spring/EC506/Proj/discover-shot".png}
+%\caption{Go see these at http://eftychis.antonpaqu.in:5601}
+%\label{}
+%\end{figure}
+
+\end{document}
