@@ -8,6 +8,9 @@
 \date{}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{setspace}
+\doublespacing
+
 \begin{document}
 
 \maketitle
@@ -20,22 +23,23 @@ This robot arm was designed using five servo motors and had four joints; two dro
 
 \section{Implementation}
 
+From a system-level perspective, the three interacting hardware components involved the MSP432 microprocessor board, a robot arm built of five servo motors, and a Raspberry Pi 2. The MSP432 served as the interface that bridged user-defined inputs in software with the physical actuation of the robot arm. Hence, it connected to both the Raspberry Pi and the servo motors with the use of GPIO pins. \newline
 
+In terms of component-level peripherals used in the MSP432, we relied on the TimerA and the eUSCI SPI modules that drove the robot arm and communicated with the Raspberry Pi. 
 
+\subsection{TimerA/Robot Arm}
 
-\begin{lstlisting}
+Five TimerA configurations were set up and linked to each GPIO output connected to the servos, and the modules were run in capture compare mode to toggle a high and low signal when the half duty-cycle period was reached, creating a PWM signal that drive the servos to a fixed position. The duty cycle period is calculated in the servo\_set() function, which will set the appropriate compare value in the register (halfPeriod\--1) when given an input from 0\--180 (the range in degrees that the motors can move in).
 
+\subsection{SPI/Raspberry Pi}
 
-
-\end{lstlisting}
-
+As the servo motors merely receive PWM signals and do not send any data in return, the communication link between the Raspberry Pi and the MSP432 only needed to be unidirectional, with data sent from the former into the latter. 
 
 \section{Schematics}
 
 \section{Outcome}
 
-The robot arm responded to inputs with a sufficient degree of accuracy. It was somewhat  
-
+The robot arm responded to inputs fairly accurately. 
 
 \section{Improvements}
 While the servos were fairly accurate when calibrated, they were quite cheap and susceptible to heat problems and audible noise, potentially making them unsafe for long-term use.
@@ -47,11 +51,11 @@ All the code can be found on GitHub at
 \begin{lstlisting}
 https://github.com/antonpaquin/EC450-proj
 \end{lstlisting}
-For the sake of convenience, the library routines and main.c are provided in the archive containing this report
+For the sake of convenience, the library routines and main.c are provided in the archive containing this report.
 
 \section{Human Resources}
-Anton was responsible for writing code involved with driving the individual servo motors as a library routine and debugged the finished product (calibration values).
-Will was responsible for the communications interface between the MSP432 and the Raspberry Pi (SPI)
+Anton was responsible for writing code involved with driving the individual servo motors as a library routine and debugged the finished product (calibration values).\\
+Will was responsible for the communications interface between the MSP432 and the Raspberry Pi (SPI).
 
 
 
