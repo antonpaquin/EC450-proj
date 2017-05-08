@@ -32,7 +32,7 @@ Five TimerA configurations were set up and linked to each GPIO output connected 
 \subsection{SPI/Raspberry Pi}
 
 As the servo motors merely receive PWM signals and do not send any data in return, the communication link between the Raspberry Pi and the MSP432 only needed to be unidirectional, with data sent from the former into the latter. 
-The SPI protocol was implemented between the two devices due to its simplicity. The Raspberry Pi was configured as the master, using a bitbanged software implementation written in Python. Meanwhile, using the eUSCI\_B SPI module with DriverLib code, the MSP432 was configured in a slave mode. Only two wires were actually needed (clock and MISO), as there was no need for slave select (only one device) or MOSI (no data from MSP432). \\ \newline
+The SPI protocol was implemented between the two devices due to its simplicity. The Raspberry Pi was configured as the master, using a bitbanged software implementation written in Python. Meanwhile, using the eUSCI\_B SPI module with DriverLib code, the MSP432 was configured in a slave mode. Only three wires were actually needed (clock, MISO, and ground), as there was no need for slave select (only one device) or MOSI (no data from MSP432). \\ \newline
 The command data sent from the Raspberry Pi to the MSP432 was a sequence of four bytes. Each byte corresponded to the degree that the joints should be set to (shoulder, elbow, wrist, and hand, respectively), and therefore were values from 0x00 to 0xB4 (0\--180). Since two servos in the shoulder controlled the same joint, we were able to use one less byte by having the MSP432 calculate the degree of the second servo as 180\--x. On the MSP432, an array of four chars was created as a command buffer, and a byte was added during each eUSCI RX interrupt as part of the handler. When the array was full (as determined by an incrementing counter), the eUSCI interrupt handler called servo\_set() to set the appropriate PWM signals that moved the servos to the degrees specified in the array, emptied the buffer, and reset the counter. \\ \newline
 From the Raspberry Pi, it was very simple to pass a list of four ints (from 0 to 180) into a loop that calls the SPI write function for each byte. Given the flexibility of Python and a small portable Linux computer in the Raspberry Pi, it was easy to set up a simple GUI that can be internet-connected (just for fun).
 
@@ -40,7 +40,13 @@ From the Raspberry Pi, it was very simple to pass a list of four ints (from 0 to
 
 
 
-\section{Schematics}
+\section{Schematic}
+
+\begin{figure}[htp]
+\includegraphics[width=\linewidth]{IMG_20170507_211043}
+\caption{Block-level diagram}
+\end{figure}
+
 
 \section{Outcome}
 
@@ -64,10 +70,7 @@ Will was responsible for the communications interface between the MSP432 and the
 
 
 
-%\begin{figure}[htp]
-%\includegraphics[scale=0.25]{"/home/anton/Documents/School/BU 2017 Spring/EC506/Proj/kibana-shot".png}
-%\caption{Kibana is cool}
-%\end{figure}
+
 
 %\begin{figure}[htp]
 %\centering
